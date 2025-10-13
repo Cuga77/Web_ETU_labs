@@ -1,0 +1,18 @@
+
+> social-network-admin@1.1.0 dev
+> concurrently "npm run gulp" "npm run start"
+
+[0]
+[0] > social-network-admin@1.1.0 gulp
+[0] > gulp dev
+[0]
+[1]
+[1] > social-network-admin@1.1.0 start
+[1] > DEBUG=social-network-admin:* node ./bin/www
+[1]
+[0] [10:25:54] Loaded external module: @babel/register
+[1] 2025-10-13T10:25:54.219Z social-network-admin:server Listening on port 3000
+[0] [10:25:55] Using gulpfile /app/2381_Bogatov_Ilya_3_src/gulpfile.babel.js
+[0] [10:25:55] Starting 'dev'...
+[0] [10:25:55] Starting 'styles'...
+[0] [10:25:55] Starting 'scripts'...

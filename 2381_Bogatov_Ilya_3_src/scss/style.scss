@@ -1,23 +1,23 @@
-// Импорт Bootstrap после определения базовых переменных
+// Import Bootstrap after defining base variables
 @use "../node_modules/bootstrap/scss/bootstrap" as bootstrap;
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 
-// Определение базовых переменных
+// Define base variables
 $font-family-sans-serif: 'Inter', sans-serif;
-$primary-color: #3b82f6; // Синий
-$secondary-color: #ffffff; // Белый
-$tertiary-color: #1e3a8a; // Темно-синий
-$quaternary-color: #cbd5e1; // Светло-серый
-$dark-bg-subtle: #1f2937; // Темно-серый
+$primary-color: #4f46e5; // Indigo
+$secondary-color: #ffffff; // White
+$tertiary-color: #3730a3; // Dark Indigo
+$quaternary-color: #e0e7ff; // Light Indigo
+$dark-bg-subtle: #111827; // Dark Gray
 
-// Размеры аватара
+// Avatar sizes
 $avatar-sm-size: 64px;
 $avatar-lg-size: 256px;
 $avatar-sm-radius: 16px;
 $avatar-lg-radius: 32px;
 
-// Миксин для центрирования элементов с использованием Flexbox
+// Mixin for centering elements using Flexbox
 @mixin center-flex {
   display: flex;
   justify-content: center;
@@ -25,22 +25,23 @@ $avatar-lg-radius: 32px;
   text-align: center;
 }
 
-// Миксин для создания аватара с заданными размерами и радиусом
+// Mixin for creating an avatar with specified sizes and radius
 @mixin avatar($size, $radius) {
   min-width: $size;
   min-height: $size;
   max-width: $size;
   max-height: $size;
   border-radius: $radius;
-  box-shadow: 0 4px 8px rgba(3, 2, 2, 0.1);
-  transition: transform 0.3s ease-in-out;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 
   &:hover {
-    transform: scale(1.25); // При наведении увеличиваем аватар
+    transform: scale(1.1);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
   }
 }
 
-// Кастомные стили
+// Custom styles
 .bg-custom-primary {
   background-color: $primary-color !important;
 }
@@ -52,7 +53,7 @@ $avatar-lg-radius: 32px;
 .nav-link {
   background-color: transparent;
   border-radius: 0.5rem;
-  padding: 0.5rem 1rem;
+  padding: 0.75rem 1rem;
   transition: background-color 0.3s ease, color 0.3s ease;
 
   &:hover,
@@ -63,7 +64,7 @@ $avatar-lg-radius: 32px;
 
   &.disabled {
     pointer-events: none;
-    opacity: 0.6;
+    opacity: 0.5;
   }
 }
 
@@ -77,4 +78,8 @@ $avatar-lg-radius: 32px;
     outline: none;
     box-shadow: none;
   }
+}
+
+.bg-gradient-primary {
+  background: linear-gradient(135deg, $primary-color, $tertiary-color);
 }

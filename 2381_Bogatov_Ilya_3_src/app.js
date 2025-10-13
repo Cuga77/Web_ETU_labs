@@ -58,28 +58,28 @@ app.use(function (req, res, next) {
 });
 
 // error handler todo: раскомментировать
-// app.use(function (err, req, res, next) {
-//     // set locals, only providing error in development
-//     res["locals"].message = err["message"];
-//     res["locals"].error = req.app.get('env') === 'development' ? err : {};
+app.use(function (err, req, res, next) {
+    // set locals, only providing error in development
+    res["locals"].message = err["message"];
+    res["locals"].error = req.app.get('env') === 'development' ? err : {};
 
-//     // render the error page
-//     res.status(err["status"] || 500);
-//     return res.render('error', {error: err});
-// });
-
-app.use(function(err, req, res, next) {
-    // log full error to console for debugging
-    try {
-        console.error('Express error:', err && err.stack ? err.stack : err);
-    } catch (e) {
-        // ignore logging errors
-    }
-
-    res.locals.message = err && err.message ? err.message : 'Internal Server Error';
-    res.locals.error = req.app.get('env') === 'development' ? err : {};
-    res.status(err && err.status ? err.status : 500);
-    return res.render('error');
+    // render the error page
+    res.status(err["status"] || 500);
+    return res.render('error', {error: err});
 });
+
+// app.use(function(err, req, res, next) {
+//     // log full error to console for debugging
+//     try {
+//         console.error('Express error:', err && err.stack ? err.stack : err);
+//     } catch (e) {
+//         // ignore logging errors
+//     }
+//
+//     res.locals.message = err && err.message ? err.message : 'Internal Server Error';
+//     res.locals.error = req.app.get('env') === 'development' ? err : {};
+//     res.status(err && err.status ? err.status : 500);
+//     return res.render('error');
+// });
 
 export default app
