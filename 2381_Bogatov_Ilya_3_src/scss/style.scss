@@ -1,0 +1,80 @@
+// Импорт Bootstrap после определения базовых переменных
+@use "../node_modules/bootstrap/scss/bootstrap" as bootstrap;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+// Определение базовых переменных
+$font-family-sans-serif: 'Inter', sans-serif;
+$primary-color: #3b82f6; // Синий
+$secondary-color: #ffffff; // Белый
+$tertiary-color: #1e3a8a; // Темно-синий
+$quaternary-color: #cbd5e1; // Светло-серый
+$dark-bg-subtle: #1f2937; // Темно-серый
+
+// Размеры аватара
+$avatar-sm-size: 64px;
+$avatar-lg-size: 256px;
+$avatar-sm-radius: 16px;
+$avatar-lg-radius: 32px;
+
+// Миксин для центрирования элементов с использованием Flexbox
+@mixin center-flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+// Миксин для создания аватара с заданными размерами и радиусом
+@mixin avatar($size, $radius) {
+  min-width: $size;
+  min-height: $size;
+  max-width: $size;
+  max-height: $size;
+  border-radius: $radius;
+  box-shadow: 0 4px 8px rgba(3, 2, 2, 0.1);
+  transition: transform 0.3s ease-in-out;
+
+  &:hover {
+    transform: scale(1.25); // При наведении увеличиваем аватар
+  }
+}
+
+// Кастомные стили
+.bg-custom-primary {
+  background-color: $primary-color !important;
+}
+
+.text-custom-secondary {
+  color: $secondary-color !important;
+}
+
+.nav-link {
+  background-color: transparent;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  transition: background-color 0.3s ease, color 0.3s ease;
+
+  &:hover,
+  &.active {
+    background-color: $quaternary-color;
+    color: $tertiary-color !important;
+  }
+
+  &.disabled {
+    pointer-events: none;
+    opacity: 0.6;
+  }
+}
+
+.navbar-toggler {
+  background-color: transparent;
+  border: none;
+  color: $secondary-color;
+  font-size: 1.5rem;
+
+  &:focus {
+    outline: none;
+    box-shadow: none;
+  }
+}

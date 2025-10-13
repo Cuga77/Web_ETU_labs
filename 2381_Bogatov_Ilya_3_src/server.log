@@ -1,0 +1,14 @@
+nohup: ввод игнорируется
+
+> social-network-admin@1.1.0 start
+> node ./bin/www
+
+[0mGET / [36m302[0m 10.499 ms - 39[0m
+Express error: TypeError: fetch failed
+    at Object.fetch (node:internal/deps/undici/undici:11360:11)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[0mGET /users/all [31m500[0m 87.795 ms - 219[0m
+Express error: TypeError: fetch failed
+    at Object.fetch (node:internal/deps/undici/undici:11360:11)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[0mGET /users/all [31m500[0m 30.015 ms - 219[0m
