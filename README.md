@@ -14,15 +14,23 @@ cd 2381_Bogatov_Ilya_3_src
     npm install
     ```
 
-2.  **Сгенерируйте SSL сертификат:**
+2.  **Сгенерируйте SSL сертификат и ключ:**
+
+    Выполните следующие команды, чтобы создать файлы `server.key` и `server.crt`:
+
     ```bash
-    openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout server.key -out server.csr -subj "/C=US/ST=California/L=San Francisco/O=My Company/OU=IT/CN=localhost/emailAddress=test@test.com"
-    openssl x509 -req -in server.csr -signkey server.key -out server.crt
+    # Шаг 1: Создаем приватный ключ и запрос на подписание сертификата (CSR)
+    openssl req -newkey rsa:2048 -nodes -keyout server.key -out server.csr -subj "/C=US/ST=California/L=San Francisco/O=My Company/OU=IT/CN=localhost/emailAddress=test@test.com"
+
+    # Шаг 2: Создаем самоподписанный сертификат из ключа и CSR
+    openssl x509 -req -days 365 -in server.csr -signkey server.key -out server.crt
+
+    # Шаг 3: Удаляем ненужный CSR
     rm server.csr
     ```
 
 3.  **Добавьте сертификат и ключ в `.gitignore`:**
-    Откройте файл `.gitignore` и добавьте следующие строки, если их еще нет:
+    Убедитесь, что файл `.gitignore` содержит следующие строки, чтобы не добавлять секретные ключи в репозиторий:
     ```
     server.key
     server.crt
