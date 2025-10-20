@@ -1,0 +1,20 @@
+<div *ngFor="let post of posts" class="post-card">
+  <mat-card>
+    <mat-card-header *ngIf="(authors.get(post.authorId) || { firstName: 'DELETED', lastName: '', avatar: 'no-avatar' }) as author">
+      <div *ngIf="author.avatar === 'no-avatar'; else showAvatar" mat-card-avatar class="no-avatar">
+        <mat-icon>account_box</mat-icon>
+      </div>
+
+      <ng-template #showAvatar>
+        <img mat-card-avatar [ngSrc]="author.avatar" alt="Аватар автора" width="40" height="40">
+      </ng-template>
+
+      <mat-card-title><a [routerLink]="'/user/' + post.authorId">{{ author.firstName }} {{ author.lastName }}</a></mat-card-title>
+      <mat-card-subtitle>{{ post.createdAt | date: 'medium' }}</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <p>{{ post.content }}</p>
+    </mat-card-content>
+  </mat-card>
+</div>

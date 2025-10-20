@@ -1,0 +1,49 @@
+<div class="register-container">
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="fill">
+      <mat-label>Имя</mat-label>
+      <input matInput formControlName="firstName" required />
+      <mat-error *ngIf="registerForm.get('firstName')?.invalid && registerForm.get('firstName')?.touched">
+        Пожалуйста, введите имя длиной от 2 до 32 символов
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Фамилия</mat-label>
+      <input matInput formControlName="lastName" required />
+      <mat-error *ngIf="registerForm.get('lastName')?.invalid && registerForm.get('lastName')?.touched">
+        Пожалуйста, введите фамилию длиной от 2 до 32 символов
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Дата рождения</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="birthday" required [max]="maxBirthday" />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+      <mat-error *ngIf="registerForm.get('birthday')?.invalid && registerForm.get('birthday')?.touched">
+        Пожалуйста, выберите дату до сегодняшнего дня
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" required type="email" />
+      <mat-error *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
+        Пожалуйста, введите корректный email
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Пароль</mat-label>
+      <input matInput formControlName="password" required type="password" />
+      <mat-error *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
+        Пароль должен быть длиной от 6 до 64 символов.
+      </mat-error>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit" [disabled]="registerForm.invalid">
+      Зарегистрироваться
+    </button>
+  </form>
+</div>
