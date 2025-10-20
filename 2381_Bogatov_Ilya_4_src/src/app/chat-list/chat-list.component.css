@@ -1,0 +1,12 @@
+mat-card-title > a {
+  color: inherit;
+  text-decoration: none;
+}
+
+mat-card-title > a:hover {
+  cursor: pointer;
+}
+
+.chat-card {
+  margin-bottom: 10px;
+}

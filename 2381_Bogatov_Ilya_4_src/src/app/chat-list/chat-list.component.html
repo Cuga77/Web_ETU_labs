@@ -1,0 +1,8 @@
+<div *ngFor="let chatItem of chatList" class="chat-card">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title><a [routerLink]="chatItem._id">{{ formatParticipants(chatItem) }}</a></mat-card-title>
+      <mat-card-subtitle>{{ chatItem.updatedAt | date: 'medium' }}</mat-card-subtitle>
+    </mat-card-header>
+  </mat-card>
+</div>

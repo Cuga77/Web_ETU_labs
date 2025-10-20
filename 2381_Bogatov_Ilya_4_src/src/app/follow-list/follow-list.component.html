@@ -1,0 +1,16 @@
+<div *ngFor="let followItem of followList" class="follow-card">
+  <mat-card>
+    <mat-card-header>
+      <div *ngIf="followItem.avatar === 'no-avatar'; else showAvatar" mat-card-avatar class="no-avatar">
+        <mat-icon>account_box</mat-icon>
+      </div>
+
+      <ng-template #showAvatar>
+        <img mat-card-avatar [ngSrc]="followItem.avatar" alt="Аватар автора" width="64" height="64">
+      </ng-template>
+
+      <mat-card-title><a [routerLink]="'/user/' + followItem._id">{{ followItem.firstName }} {{ followItem.lastName }}</a></mat-card-title>
+    </mat-card-header>
+  </mat-card>
+</div>
+

@@ -1,0 +1,19 @@
+mat-card-title > a {
+  color: inherit;
+  text-decoration: none;
+}
+
+mat-card-title > a:hover {
+  cursor: pointer;
+}
+
+.follow-card {
+  margin-bottom: 10px;
+}
+
+.no-avatar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: slategray;
+}

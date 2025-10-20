@@ -1,0 +1,34 @@
+<div class="chat-container">
+  <div class="chat-main">
+    <div #messagesContainer class="messages-container">
+      <div *ngFor="let message of messages" [ngClass]="{ 'message-sent': isMessageSentByUser(message), 'message-received': !isMessageSentByUser(message) }">
+        <mat-card>
+          <mat-card-header>
+            <div *ngIf="participants.get(message.senderId)?.avatar === 'no-avatar'; else showAvatar" mat-card-avatar class="no-avatar">
+              <mat-icon>account_box</mat-icon>
+            </div>
+
+            <ng-template #showAvatar>
+              <img mat-card-avatar [ngSrc]="participants.get(message.senderId)!.avatar" alt="Аватар автора" width="40" height="40">
+            </ng-template>
+
+            <mat-card-title>{{ participants.get(message.senderId)?.firstName + ' ' + participants.get(message.senderId)?.lastName }}</mat-card-title>
+            <mat-card-subtitle>{{ message.createdAt | date: 'short' }}</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            {{ message.content }}
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+    <div class="input-container">
+      <mat-form-field class="message-input" appearance="outline">
+        <mat-label>Сообщение</mat-label>
+        <input matInput [(ngModel)]="messageText" (keyup.enter)="sendMessage()">
+      </mat-form-field>
+      <button mat-icon-button color="primary" (click)="sendMessage()">
+        <mat-icon>send</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>
