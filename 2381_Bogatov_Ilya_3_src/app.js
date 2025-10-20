@@ -43,14 +43,16 @@ app.use(logger("dev"));
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
-app.use(express.static(path.join(__dirname, 'public', process.env.BUILD)));
+app.use(express.static(path.join(__dirname, 'public')));
 app.use('/fontawesome', express.static(path.join(__dirname, 'public', 'fontawesome')));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-app.use("/", indexRoutes);
-app.use("/users", userRoutes);
-app.use("/feed", feedRoutes);
 app.use("/api", apiRoutes);
+
+// Serve the Angular app for all other routes
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
