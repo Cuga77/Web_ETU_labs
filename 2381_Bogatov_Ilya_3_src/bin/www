@@ -47,7 +47,6 @@ function gracefulShutdown() {
 
     setTimeout(() => {
         log("Forcing shutdown...");
-        log("social-network-admin:server")("forcing shutdown...");
         process.exit(1);
     }, 10000);
 }

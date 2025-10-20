@@ -5,3 +5,4 @@
 /public/webpack
 server.csr
 server.key
+server.crt

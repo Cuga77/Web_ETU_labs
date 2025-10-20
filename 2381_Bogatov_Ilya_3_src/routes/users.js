@@ -8,88 +8,63 @@ const router = express.Router();
 const API_URL = process.env.API_URL || 'http://localhost:3000/api';
 const recordsPerPage = 15;
 
-router.get('/all', function (req, res, next) {
-    fetch(API_URL + `/user?skip=${((parseInt(req.query.page) || 1) - 1) * recordsPerPage}&limit=${recordsPerPage}`, {
-        method: 'GET'
-    }).then((response) => response.json())
-        .then(({totalCount, value}) => {
-            res.render('users', {heading: 'Список пользователей', currentPage: parseInt(req.query.page) || 1, totalPages: Math.max(Math.ceil(totalCount / recordsPerPage), 1), users: value}, (err, html) => {
-                if (err)
-                    return next(createHttpError(err));
+async function renderUsers(req, res, next, heading, query = null) {
+    const currentPage = parseInt(req.query.page) || 1;
+    const skip = (currentPage - 1) * recordsPerPage;
 
-                res.render('layout', {
-                    title: 'Все пользователи. Global',
-                    customScripts: ['users'],
-                    main: html
-                });
-            });
-        })
-        .catch((err) => {
-            next(createHttpError(err));
+    try {
+        let url = `${API_URL}/user?skip=${skip}&limit=${recordsPerPage}`;
+        let options = { method: 'GET' };
+
+        if (query) {
+            url = `${API_URL}/user/filter`;
+            options = {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ skip, limit: recordsPerPage, query })
+            };
+        }
+
+        const response = await fetch(url, options);
+        const { totalCount, value } = await response.json();
+
+        res.render('users', { heading, currentPage, totalPages: Math.max(Math.ceil(totalCount / recordsPerPage), 1), users: value }, (err, html) => {
+            if (err) return next(createHttpError(err));
+            res.render('layout', { title: `${heading}. Global`, customScripts: ['users'], main: html });
         });
-});
+    } catch (err) {
+        next(createHttpError(err));
+    }
+}
 
-router.get('/unconfirmed', function (req, res, next) {
-    fetch(API_URL + '/user/filter', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            skip: ((parseInt(req.query.page) || 1) - 1) * recordsPerPage,
-            limit: recordsPerPage,
-            query: {
-                status: 'inactive'
-            }
-        })
-    }).then((response) => response.json())
-        .then(({totalCount, value}) => {
-            res.render('users', {heading: 'Список неподтверждённых пользователей', currentPage: parseInt(req.query.page) || 1, totalPages: Math.max(Math.ceil(totalCount / recordsPerPage), 1), users: value}, (err, html) => {
-                if (err)
-                    return next(createHttpError(err));
+async function renderFollowList(req, res, next, type) {
+    const { userId } = req.params;
+    const currentPage = parseInt(req.query.page) || 1;
+    const skip = (currentPage - 1) * recordsPerPage;
 
-                res.render('layout', {
-                    title: 'Неподтверждённые пользователи. Global',
-                    customScripts: ['users'],
-                    main: html
-                });
-            });
-        })
-        .catch((err) => {
-            next(createHttpError(err));
+    try {
+        const userResponse = await fetch(`${API_URL}/user/${userId}`);
+        const user = await userResponse.json();
+        if (user.error) return next(createHttpError(user.error));
+
+        const followResponse = await fetch(`${API_URL}/user/${userId}/${type}?skip=${skip}&limit=${recordsPerPage}`);
+        const { totalCount, value } = await followResponse.json();
+        if (value.error) return next(createHttpError(value.error));
+
+        const heading = type === 'followers' ? `Подписчики ${user.firstName} ${user.lastName}` : `Подписки ${user.firstName} ${user.lastName}`;
+
+        res.render('followList', { heading, currentPage, totalPages: Math.max(Math.ceil(totalCount / recordsPerPage), 1), users: value }, (err, html) => {
+            if (err) return next(createHttpError(err));
+            res.render('layout', { title: `${heading}. Global`, customScripts: [], main: html });
         });
-});
+    } catch (err) {
+        next(createHttpError(err));
+    }
+}
 
-router.get('/blocked', function (req, res, next) {
-    fetch(API_URL + '/user/filter', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            skip: ((parseInt(req.query.page) || 1) - 1) * recordsPerPage,
-            limit: recordsPerPage,
-            query: {
-                status: 'blocked'
-            }
-        })
-    }).then((response) => response.json())
-        .then(({totalCount, value}) => {
-            res.render('users', {heading: 'Список заблокированных пользователей', currentPage: parseInt(req.query.page) || 1, totalPages: Math.max(Math.ceil(totalCount / recordsPerPage), 1), users: value}, (err, html) => {
-                if (err)
-                    return next(createHttpError(err));
-
-                res.render('layout', {
-                    title: 'Заблокированные пользователи. Global',
-                    customScripts: ['users'],
-                    main: html
-                });
-            });
-        })
-        .catch((err) => {
-            next(createHttpError(err));
-        });
-});
+router.get('/all', (req, res, next) => renderUsers(req, res, next, 'Список пользователей'));
+router.get('/unconfirmed', (req, res, next) => renderUsers(req, res, next, 'Список неподтверждённых пользователей', { status: 'inactive' }));
+router.get('/blocked', (req, res, next) => renderUsers(req, res, next, 'Список заблокированных пользователей', { status: 'blocked' }));
 
 router.get('/add', function (req, res, next) {
     res.render('manage', {type: 'add'}, (err, html) => {
@@ -151,76 +126,7 @@ router.get('/:userId/edit', function (req, res, next) {
         });
 });
 
-router.get('/:userId/followers', function (req, res, next) {
-    fetch(API_URL + `/user/${req.params.userId}`, {
-        method: 'GET'
-    }).then((response) => response.json())
-        .then((user) => {
-            if (user.error)
-                return next(createHttpError(user.error));
-
-            const skip = ((parseInt(req.query.page) || 1) - 1) * recordsPerPage;
-            fetch(API_URL + `/user/${req.params.userId}/followers?skip=${skip}&limit=${recordsPerPage}`, {
-                method: 'GET'
-            }).then((response) => response.json())
-                .then((json) => {
-                    if (json.error)
-                        return next(createHttpError(user.error));
-
-                    res.render('followList', {heading: `Подписчики ${user.firstName} ${user.lastName}`, currentPage: parseInt(req.query.page) || 1, totalPages: Math.max(Math.ceil(json.totalCount / recordsPerPage), 1), users: json.value}, (err, html) => {
-                        if (err)
-                            return next(createHttpError(err));
-
-                        res.render('layout', {
-                            title: `Подписчики ${user.firstName} ${user.lastName}. Global`,
-                            customScripts: [],
-                            main: html
-                        });
-                    });
-                })
-                .catch((err) => {
-                    return next(createHttpError(err));
-                });
-        })
-        .catch((err) => {
-            return next(createHttpError(err));
-        });
-});
-
-router.get('/:userId/following', function (req, res, next) {
-    fetch(API_URL + `/user/${req.params.userId}`, {
-        method: 'GET'
-    }).then((response) => response.json())
-        .then((user) => {
-            if (user.error)
-                return next(createHttpError(user.error));
-
-            const skip = ((parseInt(req.query.page) || 1) - 1) * recordsPerPage;
-            fetch(API_URL + `/user/${req.params.userId}/following?skip=${skip}&limit=${recordsPerPage}`, {
-                method: 'GET'
-            }).then((response) => response.json())
-                .then((json) => {
-                    if (json.error)
-                        return next(createHttpError(user.error));
-
-                    res.render('followList', {heading: `Подписки ${user.firstName} ${user.lastName}`, currentPage: parseInt(req.query.page) || 1, totalPages: Math.max(Math.ceil(json.totalCount / recordsPerPage), 1), users: json.value}, (err, html) => {
-                        if (err)
-                            return next(createHttpError(err));
-
-                        res.render('layout', {
-                            title: `Подписки ${user.firstName} ${user.lastName}. Global`,
-                            customScripts: [],
-                            main: html
-                        });
-                    });
-                })
-                .catch((err) => {
-                    return next(createHttpError(err));
-                });
-        })
-        .catch((err) => {
-            return next(createHttpError(err));
-        });
-});
+router.get('/:userId/followers', (req, res, next) => renderFollowList(req, res, next, 'followers'));
+router.get('/:userId/following', (req, res, next) => renderFollowList(req, res, next, 'following'));
 
 export default router;

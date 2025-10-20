@@ -9,10 +9,12 @@
     <link rel="stylesheet" href="/css/style.min.css">
     <title><%= title %></title>
 </head>
-<body class="m-0 row vh-100 overflow-auto">
+<body class="m-0 row vh-100 overflow-auto bg-light">
     <%- include('partials/navbar') %>
-    <main class="col" style="min-height: 90%;">
-        <%- main %>
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 py-4">
+        <div class="bg-white rounded-3 shadow-sm p-4">
+            <%- main %>
+        </div>
     </main>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <% if (customScripts && customScripts.length > 0) { %>
