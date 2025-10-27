@@ -1,0 +1,87 @@
+.exchange-start input[type="date"],
+.exchange-start input[type="number"]{
+    width: 100%;
+    background: #0b1220;
+    color: #e5e7eb;
+    border: 1px solid #374151;
+    border-radius: 6px;
+    padding: 6px 10px;
+}
+
+.exchange-start > div button{
+    background: #374151;
+    color: #e5e7eb;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.exchange-start > div button:hover{
+    background: #4b5563;
+}
+.exchange-start{
+    position: relative;
+    display: block;
+    width: 380px;
+    text-align: center;
+    color: #e5e7eb;
+    border-radius: 6px;
+    background: transparent;
+    border: 1px solid #374151;
+    border-left: 4px solid #2563eb;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 14px 16px 16px;
+    margin: 24px auto 8px;
+}
+
+.stocks-list{
+    column-count: 2;
+    width: 250px;
+    margin: 10px auto;
+}
+
+.stocks-list label{
+    display: block;
+}
+
+.chart-diag-div{
+    background: #0b1220;
+    padding: 16px;
+    border-radius: 6px;
+    width: 92%;
+    max-width: 1000px;
+    height: 420px;
+    margin: 12px auto 24px;
+}
+
+.chart-diag{
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.button button{
+    background: #10b981;
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 12px;
+    margin: 6px;
+    font-weight: 600;
+}
+
+.button button:hover{
+    background: #059669;
+}
+
+.button button:nth-child(2){
+    background: #ef4444;
+}
+
+.button button:nth-child(2):hover{
+    background: #dc2626;
+}
+
+
+
