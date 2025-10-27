@@ -1,0 +1,32 @@
+<aside class="col-md-4 col-xl-3 bg-dark text-light sidebar">
+  <nav class="navbar navbar-dark">
+    <div class="d-flex flex-column w-100">
+      <div class="sidebar-header px-3 py-3">
+        <a class="navbar-brand m-0 p-0 d-flex align-items-center gap-2" href="/">
+          <i class="fa-solid fa-share-nodes"></i>
+          <span class="fw-bold">Network Admin Panel</span>
+        </a>
+        <small class="text-secondary d-block mt-1">Управление контентом</small>
+      </div>
+      <div class="sidebar-separator"><hr></div>
+      <div class="navbar-collapse w-100 show">
+        <div class="sidebar-section px-2">
+          <div class="sidebar-section-title text-uppercase text-secondary px-2">Пользователи</div>
+          <ul class="sidebar-list list-unstyled mt-1">
+            <li class="sidebar-item"><a class="sidebar-link" href="/users/all"><i class="fa-solid fa-users"></i><span>Все</span></a></li>
+            <li class="sidebar-item"><a class="sidebar-link" href="/users/unconfirmed"><i class="fa-solid fa-user-clock"></i><span>Ожидают подтверждения</span></a></li>
+            <li class="sidebar-item"><a class="sidebar-link" href="/users/blocked"><i class="fa-solid fa-user-lock"></i><span>Заблокированные</span></a></li>
+          </ul>
+        </div>
+        <div class="sidebar-separator"><hr></div>
+        <div class="sidebar-section px-2">
+          <div class="sidebar-section-title text-uppercase text-secondary px-2">Посты</div>
+          <ul class="sidebar-list list-unstyled mt-1">
+            <li class="sidebar-item"><a class="sidebar-link" href="/feed/all"><i class="fa-solid fa-newspaper"></i><span>Все</span></a></li>
+            <li class="sidebar-item"><a class="sidebar-link disabled" id="navUserFeedLink" href="#"><i class="fa-solid fa-user"></i><span>Пользователя</span></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+</aside>

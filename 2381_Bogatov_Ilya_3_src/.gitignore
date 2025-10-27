@@ -1,8 +1,0 @@
-/node_modules
-/uploads
-/public/gulp
-/db
-/public/webpack
-server.csr
-server.key
-server.crt

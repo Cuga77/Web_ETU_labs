@@ -1,0 +1,148 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300..900&display=swap');
+
+$font-family-sans-serif: Inter, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif;
+$primary: #e2eff0;
+
+// Muted gray dark theme
+$body-bg: #1a1d21;
+$body-color: #e5e7eb; // brighter body text
+$link-color: #d1d5db; // subtle links, near body color
+$link-hover-color: lighten($link-color, 10%);
+$secondary-bg: #2c3034;
+$tertiary-bg: #343a40;
+$border-color: rgba(255,255,255,0.08);
+$card-bg: #212529;
+$input-bg: #212529;
+$input-border-color: $border-color;
+$dropdown-bg: $secondary-bg;
+$dropdown-link-color: $body-color;
+$dropdown-link-hover-bg: rgba(255,255,255,0.06);
+$navbar-dark-color: rgba(255,255,255,.75);
+$navbar-dark-hover-color: rgba(255,255,255,.95);
+$navbar-dark-active-color: #fff;
+
+// Text colors
+$headings-color: #f3f4f6; // very light headings
+$text-muted: #9ca3af; // muted secondary text
+
+// Tables
+$table-color: $body-color;
+$table-head-bg: $tertiary-bg;
+$table-head-color: #e5e7eb;
+$card-color: $body-color;
+
+@import "../node_modules/bootstrap/scss/bootstrap";
+
+$avatar-sm-size: 64px;
+$avatar-lg-size: 256px;
+$avatar-sm-radius: 16px;
+$avatar-lg-radius: 32px;
+
+@mixin center-flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin avatar($size, $radius) {
+  min-width: $size;
+  min-height: $size;
+  max-width: $size;
+  max-height: $size;
+  border-radius: $radius;
+}
+
+.no-avatar {
+  @include center-flex;
+  background-color: $tertiary-bg;
+}
+
+.avatar-sm {
+  @include avatar($avatar-sm-size, $avatar-sm-radius);
+}
+
+.avatar-lg {
+  @include avatar($avatar-lg-size, $avatar-lg-radius);
+}
+
+// Layout structure
+.page {
+  max-width: 1200px;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.25rem 0;
+  border-bottom: 1px solid $border-color;
+  margin-bottom: 0.75rem;
+}
+
+.toolbar .title {
+  margin: 0;
+  font-weight: 700;
+  letter-spacing: .2px;
+}
+
+// Sidebar nav styles
+aside .navbar-nav .nav-link {
+  color: $body-color;
+  border-radius: .5rem;
+}
+
+aside .navbar-nav .nav-link:hover {
+  background-color: rgba(255,255,255,0.06);
+  color: $headings-color;
+}
+
+aside .navbar-nav .nav-link.active {
+  background-color: #3b82f6;
+  color: #ffffff;
+}
+
+aside .navbar-nav .nav-link.disabled {
+  color: #6b7280 !important;
+}
+
+// Redesigned sidebar visuals
+.sidebar {
+  background: linear-gradient(180deg, $secondary-bg 0%, darken($secondary-bg, 3%) 100%);
+  box-shadow: inset -1px 0 0 rgba(255,255,255,0.04);
+}
+
+.sidebar-header .navbar-brand {
+  color: $headings-color;
+  font-weight: 800;
+}
+
+.sidebar-separator hr {
+  border-color: rgba(255,255,255,0.06);
+  margin: .25rem 0 .5rem;
+}
+
+.sidebar-section-title {
+  font-size: .75rem;
+  letter-spacing: .08em;
+}
+
+.sidebar-list .sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .5rem .75rem;
+  border-radius: .5rem;
+  color: $body-color;
+  text-decoration: none;
+}
+
+.sidebar-list .sidebar-link:hover {
+  background: rgba(255,255,255,0.06);
+  color: $headings-color;
+}
+
+.sidebar-list .sidebar-link i {
+  width: 1.25rem;
+  text-align: center;
+}

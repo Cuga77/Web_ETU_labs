@@ -1,0 +1,64 @@
+#!/usr/bin/env node
+
+import dotenv from "dotenv";
+import app from "../app.js";
+import debug from "debug";
+import https from "https";
+import { readFileSync } from "fs";
+
+dotenv.config();
+
+const log = debug("social-network:server");
+
+const sslOptions = {
+    key: readFileSync(process.env.KEY_FILE),
+    cert: readFileSync(process.env.CERT_FILE)
+};
+
+const port = process.env.PORT;
+app.set("port", port);
+
+const server = https.createServer(sslOptions, app);
+
+server.listen(port, () => { log(`server listening on port ${port}`) });
+server.on('error', onError);
+
+function gracefulShutdown() {
+    log("Shutting down gracefully...");
+    server.close(() => {
+        log("Closed out remaining connections.");
+        process.exit(0);
+    });
+
+    setTimeout(() => {
+        log("Forcing shutdown...");
+        process.exit(1);
+    }, 10000);
+}
+
+process.on("SIGTERM", gracefulShutdown);
+process.on("SIGINT", gracefulShutdown);
+
+function onError(error) {
+    if (error.syscall !== "listen") {
+        throw error;
+    }
+
+    const bind = typeof port === "string"
+        ? "Pipe " + port
+        : "Port " + port;
+
+    // handle specific listen errors with friendly messages
+    switch (error.code) {
+        case "EACCES":
+            console.error(bind + " requires elevated privileges");
+            process.exit(1);
+            break;
+        case "EADDRINUSE":
+            console.error(bind + " is already in use");
+            process.exit(1);
+            break;
+        default:
+            throw error;
+    }
+}

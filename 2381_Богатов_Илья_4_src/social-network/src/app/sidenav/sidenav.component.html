@@ -1,0 +1,32 @@
+<div class="container" [class.is-mobile]="mobileQuery.matches">
+  <mat-toolbar class="toolbar">
+    <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
+    <h1 class="app-name">Социальная сеть</h1>
+  </mat-toolbar>
+
+  <mat-sidenav-container class="sidenav-container"
+                         [style.margin-top.px]="mobileQuery.matches ? 56 : 0">
+    <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'"
+                 [fixedInViewport]="mobileQuery.matches" fixedTopGap="56">
+      <mat-nav-list>
+        <ng-container *ngIf="checkAuthStatus(); else unauthorizedLinks">
+          <a mat-list-item routerLink="/user/me">Профиль</a>
+          <a mat-list-item routerLink="/feed">Лента</a>
+          <a mat-list-item routerLink="/chat">Сообщения</a>
+          <a mat-list-item routerLink="/followers">Подписчики</a>
+          <a mat-list-item routerLink="/following">Подписки</a>
+          <a *ngIf="isAdmin()" mat-list-item routerLink="/admin">Администратор</a>
+          <a mat-list-item routerLink="/logout">Выйти из аккаунта</a>
+        </ng-container>
+        <ng-template #unauthorizedLinks>
+          <a mat-list-item routerLink="/login">Авторизация</a>
+          <a mat-list-item routerLink="/register">Регистрация</a>
+        </ng-template>
+      </mat-nav-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <router-outlet />
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

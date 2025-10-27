@@ -1,0 +1,87 @@
+<div class="d-flex flex-row flex-wrap gap-3 pt-2 align-items-start" id="userShort" data-id="<%= user._id %>">
+    <% if (user.avatar !== 'no-avatar') { %>
+        <picture>
+            <img src="/<%= user.avatar %>" alt="Аватар пользователя" class="avatar-lg">
+        </picture>
+    <% } else { %>
+        <div class="no-avatar avatar-lg">
+            <i class="fa-solid fa-user" aria-hidden="true"></i>
+        </div>
+    <% } %>
+    <div class="flex-grow-1">
+        <div class="toolbar">
+            <h2 class="title"><%= user.firstName + ' ' + user.lastName %></h2>
+            <div class="d-flex gap-2">
+                <a class="btn btn-primary text-nowrap" href="edit"><i class="fa-solid fa-pen" aria-hidden="true"></i> Редактировать</a>
+                <button type="button" id="buttonDelete" class="btn btn-danger text-nowrap" data-bs-toggle="modal" data-bs-target="#deleteConfirm"><i class="fa-solid fa-trash" aria-hidden="true"></i> Удалить</button>
+            </div>
+        </div>
+        <p class="m-0" id="bio"><%= user.bio %></p>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="deleteConfirm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteConfirmLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="deleteConfirmLabel">Подтверждение удаления</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+            </div>
+            <div class="modal-body">Вы уверены, что хотите удалить этого пользователя?<br>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отменить</button>
+                <form method="post" id="formDelete">
+                    <input type="hidden" name="_method" value="delete">
+                    <input type="hidden" name="id" value="<%= user._id %>">
+                    <button type="submit" class="btn btn-primary">Подтвердить</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card mt-3">
+  <div class="card-header">
+    <span class="fs-6">Информация о пользователе</span>
+  </div>
+  <div class="card-body p-0">
+    <table class="table table-hover table-borderless align-middle m-0">
+      <tbody>
+      <tr>
+        <th scope="row" class="w-25 text-body-secondary">Дата рождения</th>
+        <td><%= new Date(user.birthday).toLocaleDateString('en-GB') %></td>
+      </tr>
+      <tr>
+        <th scope="row" class="text-body-secondary">Подписчики</th>
+        <td><a href="followers/"><%= user.followers ? user.followers.length : 0 %></a></td>
+      </tr>
+      <tr>
+        <th scope="row" class="text-body-secondary">Подписки</th>
+        <td><a href="following/"><%= user.following ? user.following.length : 0 %></a></td>
+      </tr>
+      <tr>
+        <th scope="row" class="text-body-secondary">Статус</th>
+        <td class="text-capitalize"><%= user.status %></td>
+      </tr>
+      <tr>
+        <th scope="row" class="text-body-secondary">Роль</th>
+        <td class="text-capitalize"><%= user.role %></td>
+      </tr>
+      <tr>
+        <th scope="row" class="text-body-secondary">Электронная почта</th>
+        <td><%= user.email %></td>
+      </tr>
+      <tr>
+        <th scope="row" class="text-body-secondary">Создан</th>
+        <td><%= new Date(user.createdAt).toLocaleString('en-GB') %></td>
+      </tr>
+      <tr>
+        <th scope="row" class="text-body-secondary">Обновлён</th>
+        <td><%= new Date(user.updatedAt).toLocaleString('en-GB') %></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
