@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="/fontawesome/css/fontawesome.css">
     <link rel="stylesheet" href="/fontawesome/css/solid.css">
     <link rel="stylesheet" href="/css/style.min.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
     <title><%= title %></title>
 </head>
 <body class="m-0 row vh-100 overflow-auto bg-dark text-light">
@@ -16,6 +17,8 @@
             <%- main %>
         </div>
     </main>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <% if (customScripts && customScripts.length > 0) { %>
     <% for (const script of customScripts) { %>
