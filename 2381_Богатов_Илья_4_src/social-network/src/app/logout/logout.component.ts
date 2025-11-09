@@ -12,8 +12,15 @@ import {Router} from '@angular/router';
 export class LogoutComponent implements OnInit {
   constructor(private router: Router, private cookieService: CookieService) {}
   ngOnInit(): void {
-    this.cookieService.deleteAll();
+    // Удаляем ключевые cookies с явным путём '/'
+    try {
+      this.cookieService.delete('_id', '/');
+      this.cookieService.deleteAll('/');
+    } catch (e) {
+      // fallback
+      this.cookieService.deleteAll();
+    }
 
-    void this.router.navigate(['/']);
+    void this.router.navigate(['/login']);
   }
 }
