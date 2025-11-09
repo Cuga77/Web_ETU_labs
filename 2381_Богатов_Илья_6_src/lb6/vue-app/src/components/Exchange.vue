@@ -297,4 +297,13 @@
     grid-column: 1 / -1;
     height: 260px;
   }
+
+  /* Responsive */
+  @media (max-width: 768px){
+    .stock-row{ grid-template-columns: 1fr; }
+    .stock-buy{ order: 3; }
+    .stock-chart{ height: 220px; }
+    .stock-info{ grid-template-columns: 1fr; gap: 6px; }
+    .actions{ justify-content: space-between; }
+  }
 </style>

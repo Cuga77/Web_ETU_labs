@@ -1,7 +1,10 @@
 {
   "dependencies": {
     "@vue/cli": "^5.0.8",
-    "chromedriver": "^131.0.2",
+    "chromedriver": "^142.0.0",
     "selenium-webdriver": "^4.27.0"
+  },
+  "scripts": {
+    "test:e2e": "node e2e/buy-sell.test.js"
   }
 }

@@ -9,7 +9,8 @@
     "cert": "openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout social_network.key -out social_network.csr",
     "seed": "node ./scripts/seed.js",
     "activity": "node ./scripts/activity.js",
-    "make:posts": "node ./scripts/make_posts.js"
+    "make:posts": "node ./scripts/make_posts.js",
+    "test:e2e": "node e2e/admin-smoke.test.js"
   },
   "keywords": [],
   "author": "",
@@ -48,6 +49,8 @@
     "sass-loader": "^16.0.3",
     "babel-loader": "^9.2.1",
     "mini-css-extract-plugin": "^2.9.2",
-    "css-minimizer-webpack-plugin": "^7.0.0"
+    "css-minimizer-webpack-plugin": "^7.0.0",
+    "selenium-webdriver": "^4.27.0",
+    "chromedriver": "^142.0.0"
   }
 }

@@ -6,11 +6,8 @@ import './app.exchange.css'
 export default class Exchange extends Component{
     constructor(props) {
         super(props);
-        // Дата по умолчанию: год назад от текущего дня
-        const now = new Date();
-        const yearAgo = new Date(now.getFullYear() - 1, now.getMonth(), now.getDate());
-        const pad = (n) => String(n).padStart(2, '0');
-        const defaultDate = `${yearAgo.getFullYear()}-${pad(yearAgo.getMonth()+1)}-${pad(yearAgo.getDate())}`;
+        // Дата по умолчанию согласно требованию: 2019-12-09
+        const defaultDate = '2019-12-09';
         this.state = {stocksList: [], startDate: defaultDate, changeSpeed: 1, running: false};
         this.chart = null;
         this.selectedSymbols = [];

@@ -78,4 +78,9 @@ export default {
   .invisible-button { background: none; color: inherit; border: none; padding: 0; font: inherit; cursor: pointer; outline: inherit; }
 
   .balance { opacity: 0.85; }
+
+  @media (max-width: 640px){
+    .header-info{ font-size: 16px; }
+    .header-small-elem{ flex-direction: column; align-items: flex-start; gap: 6px; }
+  }
 </style>
